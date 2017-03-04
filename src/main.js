@@ -110,8 +110,10 @@ var $$ = {
             var material = mesh.material;
             if(!material) return;
             var arr = [];
-            
-            o.deform.forEach(function(d, i){ arr.push(lerp(getValue(o.deform[i]), getValue(o.deform[(i+1) % 4]), Math.pow(getValue(o.deform[(i+2) % 4]),1.66))); });
+            o.deform.forEach(function(d){ 
+                var v = getValue(d);
+                arr.push(v); 
+            });
             material.uniforms.deform.value.fromArray(arr);
             var l = $.lights;
             material.uniforms.lights.value.set(l[1], l[2], $.pump,0);

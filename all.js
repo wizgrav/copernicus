@@ -96285,7 +96285,7 @@
 	  "uniform vec4 lights;",
 	  "void getFloorIrradiance( const in GeometricContext geometry, out IncidentLight directLight  ) {",
 	  "    vec2 vxz = geometry.position.xz;",
-	  "    float len = length(vxz) * 0.5; ",
+	  "    float len = length(vxz) * 0.4; ",
 	  "    float start = mix(0.1,0.4, lights.x);",
 	  "    float end = start + mix(0.01,0.4, lights.y);",
 	  "    float dist=0.;",

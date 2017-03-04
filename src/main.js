@@ -46,7 +46,7 @@ var $$ = {
             $.triggered = false;
         } else if (!$.triggered && $.deform[0] >= 0.996){
             //console.log($.rotation);
-            this.push({start: time, offset: 0});
+            this.push({start: time, offset: $.rotation});
             $.rocks.push(createRock(time, $.rotation, $.count++ & 1 ? 1: -1));
             $.pump = 1;
             $.triggered = true;

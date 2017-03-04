@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="twitter:card" content="player">
+    <meta name="twitter:site" content="@wizgrav">
+    <meta name="twitter:title" content="Copernicus">
+    <meta name="twitter:description" content="Clubber, AFRAME, Whitestone challenge">
+    <meta name="twitter:player" content="https://wizgrav.github.io/copernicus/index.html">
+    <meta name="twitter:player:width" content="600">
+    <meta name="twitter:player:height" content="370">
+    <meta charset="utf-8">
+    <title>Copernicus</title>
+    <meta name="description" content="Clubber, AFRAME">
+    
+    <!--script src="lib/aframe.js"></script>
+    <script src="lib/clubber.js"></script>
+    <script src="lib/clubberize.js"></script>
+    <script>
+    THREE.Pass = function () {
+        this.enabled = true;
+        this.needsSwap = true;
+        this.clear = false;
+        this.renderToScreen = false;
+
+    };
+    
+    Object.assign( THREE.Pass.prototype, {
+
+        setSize: function( width, height ) {},
+
+        render: function ( renderer, writeBuffer, readBuffer, delta, maskActive ) {
+
+            console.error( "THREE.Pass: .render() must be implemented in derived pass." );
+
+        }
+
+    } );
+    </script>
+    <script src="lib/CopyShader.js"></script>
+    <script src="lib/LuminosityHighPassShader.js"></script>
+    <script src="lib/UnrealBloomPass.js"></script>
+    <script src="src/util.js"></script>
+    <script src="src/config.js"></script>
+    <script src="src/terrain.js"></script>
+    <script src="src/floor.js"></script>
+    <script src="src/rock.js"></script-->
+
+    <script src="all.min.js"></script>
+    
+    <style>
+        * {
+          margin:0;
+          padding:0;
+        }
+        #header {
+          position:fixed;
+        }
+        audio {
+          position: fixed;
+          display:none;
+        }
+        #header a {
+          text-decoration: none;
+          color: gray;
+          font-family: monospace;
+          font-size: 12px;
+        }
+
+        #header img {
+          vertical-align: middle;
+        }
+
+        #overlay {
+          top:0;
+          left:0;
+          width:100vw;
+          height:100vh;
+          position: fixed;
+          z-index: 1000000;
+          background-color: rgba(0,0,0,1.0);
+          transition: background-color 666ms;
+        }
+        #overlay div {
+          position: absolute;
+          font-family: monospace;
+          font-size: 3vh;
+          color: #999999;
+          top: 42vh;
+          width: 100vw;
+          text-align:center;
+        }
+        #overlay.loaded {
+          background-color: rgba(0,0,0,0.1);
+          background-image: url(assets/play.svg);
+          background-size: 20% 20%;
+          background-position: center center;
+          background-repeat: no-repeat;
+        }
+
+        #overlay.loaded div {
+          display: none;
+        }
+
+    </style>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets timeout="10000">
+        <audio src="assets/audio.mp3" crossorigin="anonymous" id="audio"></audio>
+          <a-asset-item id="terrain-obj" src="assets/copernicus.obj"></a-asset-item>
+          <img src="assets/terrain.jpg" id="terrain-normals" />
+          <img src="assets/torus.jpg" id="ring-normals" />
+          <img src="assets/rock0.jpg" id="rock0" />
+          <img src="assets/rock1.jpg" id="rock1" />
+          <img src="assets/rock2.jpg" id="rock2" />
+          <img src="assets/milkyway.jpg" id="milkyway" />
+          <a-mixin id="rock" geometry="primitive: xplane;" material="shader: rock;"></a-mixin>
+      </a-assets>
+      <a-entity position="0 -1.16 0">
+        <a-entity id="camera" camera="far:500; near:0.01;" look-controls></a-entity>
+      </a-entity>
+      <a-entity id="ambient" light="type: ambient; color: #555;" ></a-entity>
+      <a-entity id="skylight" light="type: directional; color: #887788; intensity: 1.0" position="0 1 0"></a-entity>
+      <a-obj-model id="terrain" src="#terrain-obj" position="0 3.5 0" material="shader:terrain; color: #AAA; roughness:0.95; metalness: 0.05; normalMap: #terrain-normals;normalTextureRepeat: 20 20"></a-obj-model>
+      <a-cylinder material="shader:floor" id="floor"  position="0 -1.33 0" height="0.1" radius="1"></a-cylinder>
+      <a-entity id="ring">
+          <a-torus id="torus" material="shader:standard; flatShading:false;side:front; color: #403C3C; roughness:0.66; metalness: 0.5;normalMap: #ring-normals;normalTextureRepeat: 64 3" radius="1.1" radius-tubular="0.08" rotation="90 180 180" position="0 -1.41 0" ></a-torus>
+      </a-entity>
+      <a-sky id="sky" color="#FFFFFF" src="#milkyway" radius="120" rotation="0 0 180" ></a-videosphere>
+    </a-scene>
+    <div id="overlay">
+      <div>loading...</div>
+    </div>
+
+    <script src="src/main.js"></script>
+  </body>
+</html>

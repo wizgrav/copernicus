@@ -1,0 +1,44 @@
+{
+  "name": "copernicus",
+  "version": "0.1.0",
+  "description": "Webgl music visual for whitestone contest",
+  "main": "./index.js",
+  "scripts": {
+    "dist": "webpack index.js all.js && uglifyjs all.js -o all.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wizgrav/copernicus.git"
+  },
+  "keywords": [
+    "clubber",
+    "music",
+    "notes",
+    "octave",
+    "audio",
+    "analysis",
+    "kick",
+    "bass",
+    "midi",
+    "key",
+    "note",
+    "webgl",
+    "vector",
+    "shader",
+    "analyzer",
+    "analyser",
+    "rhythm",
+    "reactive",
+    "visualisation"
+  ],
+  "author": "Yannis Gravezas <wizgrav@gmail.com>",
+ "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wizgrav/copernicus/issues"
+  },
+  "homepage": "https://github.com/wizgrav/copernicus#readme",
+  "devDependencies": {
+    "webpack": "^1.13.0",
+    "uglifyjs": "git+https://github.com/mishoo/UglifyJS2.git#harmony"
+  }
+}

@@ -70,10 +70,10 @@ THREE.ShaderChunk.lights_pars += [
   "",
   "    float lightDistance = length(ld);",
    "",
-  "        float spotEffect = smoothstep(0.12, 0., dist );",
+  "        float spotEffect = smoothstep(0.11, 0., dist );",
   "",
   //"        directLight.color = vec3(mix(vec3(1.,0.,0.), vec3(0.,0.,1.),len));",
-  "        directLight.color = vec3(max(0.75, lights.y)) * spotEffect * punctualLightIntensityToIrradianceFactor( lightDistance, 3., 0.66 );",
+  "        directLight.color = vec3(max(0.8, lights.y)) * spotEffect * punctualLightIntensityToIrradianceFactor( lightDistance, 3., 0.66 );",
   "        directLight.visible = true;",
    "}",
   "#endif"

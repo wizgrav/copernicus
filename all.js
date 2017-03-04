@@ -96303,7 +96303,7 @@
 	  "",
 	  "    float lightDistance = length(ld);",
 	   "",
-	  "        float spotEffect = pow(smoothstep(0.3, 0., dist ), 2.);",
+	  "        float spotEffect = pow(smoothstep(0.2, 0., dist ), 2.);",
 	  "",
 	  //"        directLight.color = vec3(mix(vec3(1.,0.,0.), vec3(0.,0.,1.),spotEffect));",
 	  "        directLight.color = vec3(max(0.66, lights.y)) * spotEffect * punctualLightIntensityToIrradianceFactor( lightDistance, 3., 0.33 );",

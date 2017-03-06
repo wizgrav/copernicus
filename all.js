@@ -96008,6 +96008,111 @@
 /* 14 */
 /***/ function(module, exports) {
 
+	window.CONFIG = {
+	    clientId: "56c4f3443da0d6ce6dcb60ba341c4e8d",
+	    ambient: ["#333333", "#554555"],
+	    sky: ["#444444", "#FFFFFF"],
+	    skylight: [0.2 , 0.6],
+	    torus: ["#333333", "#555555"],
+	    bloom: [0.4, 0.3],
+	    lights: "https://wizgrav.github.io/clubber/tool/?tool=1&t0=0234&r0=1,32,32,128&s0=0.09,0.09,0.09,0.09&a0=1,1,1,1&t1=0234&r1=36,48,32,128&s1=0.09,0.09,0.09,-0.2&a1=0.5,0.1,0.5,1&t2=0234&r2=48,64,32,128&s2=0.09,0.09,0.08,0.08&a2=1,1,1,1&t3=0234&r3=64,96,48,128&s3=0.08,0.08,0.08,0.08&a3=1,1,0.5,0.2&red=smoothstep(iMusic%5B1%5D.z%20*%200.33%2C%20iMusic%5B1%5D.z%2C%20iMusic%5B1%5D.w)%20*%20smoothstep(0.%2C%200.66%2C%20iMusic%5B1%5D.w)&green=smoothstep(iMusic%5B2%5D.x%2C%202.%20-%20iMusic%5B2%5D.z%2C%20length(iMusic%5B2%5D.yw))%20&blue=smoothstep(iMusic%5B1%5D.y%20*%20iMusic%5B2%5D.y%2C%201.66%20-%20iMusic%5B0%5D.w%20*%20iMusic%5B1%5D.w%2C%20length(iMusic%5B0%5D.yw%20*%20iMusic%5B1%5D.yw))&alpha=smoothstep(0.33%2C%201.66%20-%20iMusic%5B3%5D.w%2C%20length(max(iMusic%5B2%5D.xz%2C%20iMusic%5B3%5D.xz)))&track=https%3A%2F%2Fsoundcloud.com%2Fdraufunddran%2Fdrauf-und-dran-2eur&shader=https%3A%2F%2Fwww.shadertoy.com%2Fview%2FMtGSWz",
+	    deform: "https://wizgrav.github.io/clubber/tool/?tool=1&t0=0234&r0=1,32,32,128&s0=0.08,0.08,0.08,0.08&a0=1,1,1,1&t1=0234&r1=32,48,32,128&s1=0.08,0.08,0.08,0.08&a1=1,1,1,1&t2=0234&r2=48,64,32,128&s2=0.08,0.08,0.08,0.08&a2=1,1,1,1&t3=0234&r3=64,96,32,128&s3=0.08,0.08,0.09,0.08&a3=1,1,1,1&red=smoothstep(iMusic%5B2%5D.y%2C%201.66%20-%20iMusic%5B1%5D.w%2C%20length(iMusic%5B0%5D.xyw%20*%20iMusic%5B1%5D.xyw))&green=smoothstep(iMusic%5B1%5D.x%2C%201.66%20-%20iMusic%5B2%5D.y%2C%20length(iMusic%5B1%5D.xyz%20*%20iMusic%5B2%5D.xyz))&blue=smoothstep(iMusic%5B3%5D.w%20*%20iMusic%5B3%5D.y%2C%201.66%20-%20iMusic%5B3%5D.z%20*%20iMusic%5B2%5D.z%2C%20length(iMusic%5B3%5D.xyz%20*%20iMusic%5B2%5D.xyz))&alpha=smoothstep(iMusic%5B2%5D.y%2C%201.33%20-%20iMusic%5B3%5D.z%20*%20iMusic%5B3%5D.x%2C%20length(iMusic%5B3%5D.yw))&track=https%3A%2F%2Fsoundcloud.com%2Fdraufunddran%2Fdrauf-und-dran-2eur"
+	};
+
+
+/***/ },
+/* 15 */
+/***/ function(module, exports) {
+
+	window.setupAudio = function () {
+	  var handleDragOver = function(e) {
+	      e.preventDefault();
+	      e.stopPropagation();
+	  }
+	  var handleDrop = function(e) {
+	      e.preventDefault();
+	      e.stopPropagation();
+	      var objectUrl = URL.createObjectURL(e.dataTransfer.files[0]);
+	      play(objectUrl, true);
+	  }
+
+	  sceneEl.addEventListener('drop', handleDrop, false);
+	  sceneEl.addEventListener('dragover', handleDragOver, false);
+
+	  $.audio.onerror = function () {
+	    alert(
+	      audio.currentSrc.match("blob:")  ?
+	      "Bad audio file"
+	      :  
+	      "Soundcloud API limit reached, you could try again later.\nYou can also drop your own audio files in the page.\n\n"
+	    );
+	          
+	  }
+	}
+
+	window.getParameterByName = function (name, search) {
+	  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+	  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(search || location.search);
+	  return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+
+	window.play = function (src, dropped) {
+	  if($.lastObjectUrl){
+	    URL.revokeObjectURL($.lastObjectUrl);
+	    delete $.lastObjectUrl;
+	  }
+	  if(!dropped) {
+	    src = '//api.soundcloud.com/tracks/'+src+'/stream?client_id=' + CONFIG.clientId;
+	  } else {
+	    $.lastObjectUrl = src;
+	  }
+	  $.audio.src=src;
+	}
+
+	window.load = function (url, cb) {
+	  return new Promise(function (resolve, reject) {
+	    var xhr = new XMLHttpRequest();
+	    xhr.open("GET", url);
+	    xhr.onload = function () {
+	      if (this.status >= 200 && this.status < 300) {
+	        resolve(xhr);
+	      } else {
+	        reject({
+	          status: this.status,
+	          statusText: xhr.statusText
+	        });
+	      }
+	      if(cb) {
+	        cb(this.status, xhr.responseURL);
+	      }
+	    };
+	    xhr.onerror = function () {
+	      reject({
+	        status: this.status,
+	        statusText: xhr.statusText
+	      });
+	    };
+	    xhr.send();
+	  });
+	}
+
+
+	window.soundcloud = function (url) {
+	  load("//api.soundcloud.com/resolve?url=" + encodeURIComponent(url.split("?")[0]) + "&client_id=" + CONFIG.clientId).then(function (resp) {
+	    var text = resp.response;
+	    var data = JSON.parse(text);
+	    if (data.kind !== "track"){
+	      alert( "Please provide a track url, " + data.kind + " urls are not supported.");
+	      return;
+	    }
+	    $.info.innerHTML = "<a href='"+data.permalink_url+"' target='_blank'>Listening to "+data.title+" by "+data.user.username+"</a>";
+	    $.header.style.display = "block";
+	    play(data.id);
+	  }, function () {
+	    alert(url + " is not a valid soundcloud track url.")
+	  })
+	}
+
 	window.smoothstep = function (min, max, value) {
 	  var x = Math.max(0, Math.min(1, (value-min)/(max-min)));
 	  return x*x*(3 - 2*x);
@@ -96032,27 +96137,12 @@
 
 
 /***/ },
-/* 15 */
-/***/ function(module, exports) {
-
-	window.CONFIG = {
-	    ambient: ["#333333", "#443344"],
-	    sky: ["#444444", "#FFFFFF"],
-	    skylight: [0.2 , 0.5],
-	    torus: ["#333333", "#555555"],
-	    bloom: [0.4, 0.3],
-	    lights: "https://wizgrav.github.io/clubber/tool/?tool=1&t0=0234&r0=1,32,32,128&s0=0.09,0.09,0.09,0.09&a0=1,1,1,1&t1=0234&r1=36,48,32,128&s1=0.09,0.09,0.09,-0.2&a1=0.5,0.1,0.5,1&t2=0234&r2=48,64,32,128&s2=0.09,0.09,0.08,0.08&a2=1,1,1,1&t3=0234&r3=64,96,48,128&s3=0.08,0.08,0.08,0.08&a3=1,1,0.5,0.2&red=smoothstep(iMusic%5B1%5D.z%20*%200.33%2C%20iMusic%5B1%5D.z%2C%20iMusic%5B1%5D.w)%20*%20smoothstep(0.%2C%200.66%2C%20iMusic%5B1%5D.w)&green=smoothstep(iMusic%5B2%5D.x%2C%202.%20-%20iMusic%5B2%5D.z%2C%20length(iMusic%5B2%5D.yw))%20&blue=smoothstep(iMusic%5B1%5D.y%20*%20iMusic%5B2%5D.y%2C%201.66%20-%20iMusic%5B0%5D.w%20*%20iMusic%5B1%5D.w%2C%20length(iMusic%5B0%5D.yw%20*%20iMusic%5B1%5D.yw))&alpha=smoothstep(0.33%2C%201.66%20-%20iMusic%5B3%5D.w%2C%20length(max(iMusic%5B2%5D.xz%2C%20iMusic%5B3%5D.xz)))&track=https%3A%2F%2Fsoundcloud.com%2Fdraufunddran%2Fdrauf-und-dran-2eur&shader=https%3A%2F%2Fwww.shadertoy.com%2Fview%2FMtGSWz",
-	    deform: "https://wizgrav.github.io/clubber/tool/?tool=1&t0=0234&r0=1,32,32,128&s0=0.08,0.08,0.08,0.08&a0=1,1,1,1&t1=0234&r1=32,48,32,128&s1=0.08,0.08,0.08,0.08&a1=1,1,1,1&t2=0234&r2=48,64,32,128&s2=0.08,0.08,0.08,0.08&a2=1,1,1,1&t3=0234&r3=64,96,32,128&s3=0.08,0.08,0.09,0.08&a3=1,1,1,1&red=smoothstep(iMusic%5B2%5D.y%2C%201.66%20-%20iMusic%5B1%5D.w%2C%20length(iMusic%5B0%5D.xyw%20*%20iMusic%5B1%5D.xyw))&green=smoothstep(iMusic%5B1%5D.x%2C%201.66%20-%20iMusic%5B2%5D.y%2C%20length(iMusic%5B1%5D.xyz%20*%20iMusic%5B2%5D.xyz))&blue=smoothstep(iMusic%5B3%5D.w%20*%20iMusic%5B3%5D.y%2C%201.66%20-%20iMusic%5B3%5D.z%20*%20iMusic%5B2%5D.z%2C%20length(iMusic%5B3%5D.xyz%20*%20iMusic%5B2%5D.xyz))&alpha=smoothstep(iMusic%5B2%5D.y%2C%201.33%20-%20iMusic%5B3%5D.z%20*%20iMusic%5B3%5D.x%2C%20length(iMusic%5B3%5D.yw))&track=https%3A%2F%2Fsoundcloud.com%2Fdraufunddran%2Fdrauf-und-dran-2eur"
-	};
-
-
-/***/ },
 /* 16 */
 /***/ function(module, exports) {
 
 	THREE.ShaderChunk.displacementmap_pars_vertex += [
 	    "","#ifdef WIZ_TERRAIN",
-	    "   uniform sampler2D noteTex;",
+	    " uniform sampler2D noteTex;",
 	    "	uniform vec4 waveDists;",
 	    "	uniform vec4 waveOffsets;",
 	    "#endif",""
@@ -96074,7 +96164,7 @@
 	    "        wd.xyzw = wd.yzwx;",
 	    "    }", 
 	    " float ht = texture2D( noteTex, vec2( abs(dot( normalize(transformed.xz), vec2(1.,0.) )) * 2., 0.) ).x;",
-	    " float att = pow(1. - smoothstep(0.,0.1,abs(disp)), 1.66 ) * pow(smoothstep(0.09,0.16,len) * smoothstep(1.,0.8,len),1.33) ;", 
+	    " float att = pow(1. - smoothstep(0.,0.1,abs(disp)), 1.66 ) * pow(smoothstep(0.09,0.16,len) * smoothstep(0.96,0.7,len),1.33) ;", 
 	    "	transformed += normal * ht *  6.66 *  att ;", 
 	    " vColor.xyz *=  mix(1.0, pow(mix( mix(1.0,pow(0.8,1.+ht), smoothstep(0.,0.24,len) ), 1., (2. * abs( smoothstep(0., 0.2, disp) - 0.5)) ),2.), smoothstep(0.66,0.55,len));",
 	    "#endif",""
@@ -96255,8 +96345,8 @@
 	    "  float f3 = deform.z;",
 	    "  float f4 = deform.w;",
 	    "",
-	    "	vec2 angles = M_PI * vec2(2. * uv.x, pow(uv.y, 1. + f3) - 1.);",
-	    "  float r = mix(1., 0.66 + 0.33 * sin(4. * PI * pow(uv.y, 1. + f4) + PI * f1), f2);",
+	    "	vec2 angles = M_PI * vec2(2. * uv.x, pow(uv.y, mix(0.5, 2., f4)) - 1.);",
+	    "  float r = mix(1., 0.5 + 0.33 * sin(4. * PI * uv.y + PI * f1) + sin(3. * PI * uv.y * f3) * 0.16, f2);",
 	    "  return anglesToSphereCoord(angles,  r) * 0.1;",
 	    "}",
 	    "",
@@ -96305,10 +96395,10 @@
 	  "",
 	  "    float lightDistance = length(ld);",
 	   "",
-	  "        float spotEffect = smoothstep(0.11, 0., dist );",
+	  "        float spotEffect = smoothstep(0.13, 0., dist );",
 	  "",
 	  //"        directLight.color = vec3(mix(vec3(1.,0.,0.), vec3(0.,0.,1.),len));",
-	  "        directLight.color = vec3(max(0.8, lights.y)) * spotEffect * punctualLightIntensityToIrradianceFactor( lightDistance, 3., 0.66 );",
+	  "        directLight.color = vec3(max(0.8, lights.y)) * spotEffect * punctualLightIntensityToIrradianceFactor( lightDistance, 3., 0.33 );",
 	  "        directLight.visible = true;",
 	   "}",
 	  "#endif"

@@ -1,6 +1,6 @@
 THREE.ShaderChunk.displacementmap_pars_vertex += [
     "","#ifdef WIZ_TERRAIN",
-    "   uniform sampler2D noteTex;",
+    " uniform sampler2D noteTex;",
     "	uniform vec4 waveDists;",
     "	uniform vec4 waveOffsets;",
     "#endif",""
@@ -22,7 +22,7 @@ THREE.ShaderChunk.displacementmap_vertex += [
     "        wd.xyzw = wd.yzwx;",
     "    }", 
     " float ht = texture2D( noteTex, vec2( abs(dot( normalize(transformed.xz), vec2(1.,0.) )) * 2., 0.) ).x;",
-    " float att = pow(1. - smoothstep(0.,0.1,abs(disp)), 1.66 ) * pow(smoothstep(0.09,0.16,len) * smoothstep(1.,0.8,len),1.33) ;", 
+    " float att = pow(1. - smoothstep(0.,0.1,abs(disp)), 1.66 ) * pow(smoothstep(0.09,0.16,len) * smoothstep(0.96,0.7,len),1.33) ;", 
     "	transformed += normal * ht *  6.66 *  att ;", 
     " vColor.xyz *=  mix(1.0, pow(mix( mix(1.0,pow(0.8,1.+ht), smoothstep(0.,0.24,len) ), 1., (2. * abs( smoothstep(0., 0.2, disp) - 0.5)) ),2.), smoothstep(0.66,0.55,len));",
     "#endif",""

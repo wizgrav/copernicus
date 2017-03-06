@@ -25,8 +25,8 @@ Object.assign( THREE.Pass.prototype, {
 require("./lib/CopyShader.js");
 require("./lib/LuminosityHighPassShader.js");
 require("./lib/UnrealBloomPass.js");
-require("./src/util.js");
 require("./src/config.js");
+require("./src/common.js");
 require("./src/terrain.js");
 require("./src/floor.js");
 require("./src/rock.js");

@@ -102,9 +102,52 @@
           display: none;
         }
 
+        #header {
+          position:fixed;
+          z-index: 100;
+          padding-top:0.33vh;
+        }
+
+        #header #info {
+          vertical-align: text-bottom;
+          display: inline-block;
+          padding-top:1vh;
+          font-size: 0vh;
+          transition: opacity 0.2s, font-size 0.4s;
+          overflow: hidden;
+          opacity:0;
+        }
+
+        #header:hover #info {
+          font-size: 1.8vh;
+          opacity: 1;
+        }
+
+        #header #info a {
+          text-decoration: none;
+          color: #eee;
+          text-shadow: 1px 1px #666;
+        }
+
+        #header img {
+          vertical-align: middle;
+        }
+
+        span {
+          color: white;
+          font-weight:bold;
+          font-size: 2vh;
+          text-shadow: 1px 1px black;
+          vertical-align: middle;
+
+        }
     </style>
   </head>
   <body>
+    <div id="header" style="z-index:0" title="You can also drag & drop audio files.">
+      <img src="assets/soundcloud.png"/>
+      <div id="info"></div>
+    </div>
     <a-scene>
       <a-assets timeout="10000">
         <audio src="assets/audio.mp3" crossorigin="anonymous" id="audio"></audio>
@@ -121,8 +164,8 @@
         <a-entity id="camera" camera="far:500; near:0.01;" look-controls></a-entity>
       </a-entity>
       <a-entity id="ambient" light="type: ambient; color: #555;" ></a-entity>
-      <a-entity id="skylight" light="type: directional; color: #887788; intensity: 1.0" position="0 1 0"></a-entity>
-      <a-obj-model id="terrain" src="#terrain-obj" position="0 3.5 0" material="shader:terrain; color: #AAA; roughness:0.95; metalness: 0.05; normalMap: #terrain-normals;normalTextureRepeat: 20 20"></a-obj-model>
+      <a-entity id="skylight" light="type: directional; color: #998999; intensity: 1.0" position="0 1 0"></a-entity>
+      <a-obj-model id="terrain" src="#terrain-obj" position="0 3.5 0" material="shader:terrain; color: #CCC; roughness:0.95; metalness: 0.05; normalMap: #terrain-normals;normalTextureRepeat: 20 20"></a-obj-model>
       <a-cylinder material="shader:floor" id="floor"  position="0 -1.33 0" height="0.1" radius="1"></a-cylinder>
       <a-entity id="ring">
           <a-torus id="torus" material="shader:standard; flatShading:false;side:front; color: #403C3C; roughness:0.66; metalness: 0.5;normalMap: #ring-normals;normalTextureRepeat: 64 3" radius="1.1" radius-tubular="0.08" rotation="90 180 180" position="0 -1.41 0" ></a-torus>

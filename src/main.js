@@ -1,5 +1,8 @@
 // Objects
 var $ = {
+    post: true,
+    info: "#info",
+    header: "#header",
     terrain: "#terrain",
     torus: "#torus",
     floor: "#floor",
@@ -22,6 +25,10 @@ var $ = {
     count: 0
 };
 Object.keys($).forEach(function (k) { $[k] = typeof $[k] === "string" ? document.querySelector($[k]): $[k];});
+
+var sceneEl = document.querySelector("a-scene");
+
+setupAudio();
 
 // Updaters
 
@@ -164,7 +171,6 @@ function setup() {
 }
 
 $.clubber.listen(document.getElementById("audio"));
-var sceneEl = document.querySelector("a-scene");
 $.noteTex = new THREE.DataTexture($.clubber.notes, 128, 1, THREE.LuminanceFormat, THREE.UnsignedByteType);
 $.noteTex.minFilter = THREE.LinearFilter;
 $.noteTex.magFilter = THREE.LinearFilter;
@@ -192,6 +198,23 @@ var NormalMaps = [];
     texture.needsUpdate=true;
     NormalMaps.push(texture);
 });
+
+["lights", "deform"].forEach(function (s) {
+    var ps = getParameterByName(s);
+    if(ps){
+        load(ps).then(function (r) {
+            $[s+"Fn"] = Clubberize($.clubber, r.responseURL);
+        });
+    }
+});
+
+if(getParameterByName("track")){
+    soundcloud(getParameterByName("track"));
+}  
+
+if(getParameterByName("nopost")){
+    $.post = false;
+}  
 
 setup();
 
@@ -222,8 +245,13 @@ function render (time) {
     this.animationFrameID = effect.requestAnimationFrame(this.render);
 
     sceneEl.effect.autoSubmitFrame = false;
-    effect.render(this.object3D, this.camera, renderTarget, true);
-    $.bloom.render(this.renderer, null, renderTarget, dt);
+
+    if ($.post) {
+        effect.render(this.object3D, this.camera, renderTarget, true);
+        $.bloom.render(this.renderer, null, renderTarget, dt);
+    } else {
+        effect.render(this.object3D, this.camera);
+    }
     effect.submitFrame();
 
     this.time = time;

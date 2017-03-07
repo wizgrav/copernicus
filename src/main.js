@@ -134,7 +134,7 @@ var $$ = {
     },
 
     ambient: function (time, dt) {
-        this.setAttribute("light", {color: lerpColor(dt[0], dt[1], $.lights[3])});
+        this.setAttribute("light", {intensity: lerp(dt[0], dt[1], $.lights[3])});
     },
 
     skylight: function (time, dt) {
@@ -144,7 +144,7 @@ var $$ = {
 
     sky: function (time, dt) {
         this.setAttribute("rotation", {x:0, y:time/3333 % 360, z: 0});
-        this.setAttribute("color", lerpColor(dt[0], dt[1],Math.pow($.lights[3], 1.66)));
+        this.setAttribute("color", lerpColor(dt[0], dt[1],Math.pow($.lights[3], 1.33)));
     },
 
     bloom: function (time, dt) {
@@ -273,3 +273,11 @@ overlay.addEventListener("click", function onClick() {
     this.style.display = "none";
     $.audio.play();    
 });
+
+window.setTimeout(function () {
+    document.querySelector("#overlay div").innerHTML = "still loading...";
+}, 5000);
+
+window.setTimeout(function () {
+    document.querySelector("#overlay div").innerHTML = "almost there...";
+}, 10000);

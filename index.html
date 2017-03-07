@@ -163,9 +163,9 @@
       <a-entity position="0 -1.16 0">
         <a-entity id="camera" camera="far:500; near:0.01;" look-controls></a-entity>
       </a-entity>
-      <a-entity id="ambient" light="type: ambient; color: #555;" ></a-entity>
-      <a-entity id="skylight" light="type: directional; color: #998999; intensity: 1.0" position="0 1 0"></a-entity>
-      <a-obj-model id="terrain" src="#terrain-obj" position="0 3.5 0" material="shader:terrain; color: #CCC; roughness:0.95; metalness: 0.05; normalMap: #terrain-normals;normalTextureRepeat: 20 20"></a-obj-model>
+      <a-entity id="ambient" light="type: hemisphere; color: #665666; groundColor: #444444;" ></a-entity>
+      <a-entity id="skylight" light="type: directional; color: #887888; intensity: 1.0" position="0 1 0"></a-entity>
+      <a-obj-model id="terrain" src="#terrain-obj" position="0 3.5 0" material="shader:terrain; color: #EEE; roughness:0.95; metalness: 0.05; normalMap: #terrain-normals;normalTextureRepeat: 20 20"></a-obj-model>
       <a-cylinder material="shader:floor" id="floor"  position="0 -1.33 0" height="0.1" radius="1"></a-cylinder>
       <a-entity id="ring">
           <a-torus id="torus" material="shader:standard; flatShading:false;side:front; color: #403C3C; roughness:0.66; metalness: 0.5;normalMap: #ring-normals;normalTextureRepeat: 64 3" radius="1.1" radius-tubular="0.08" rotation="90 180 180" position="0 -1.41 0" ></a-torus>

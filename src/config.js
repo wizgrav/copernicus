@@ -1,8 +1,8 @@
 window.CONFIG = {
     clientId: "56c4f3443da0d6ce6dcb60ba341c4e8d",
-    ambient: ["#333333", "#554555"],
-    sky: ["#444444", "#FFFFFF"],
-    skylight: [0.2 , 0.6],
+    ambient: [0.5, 1.0],
+    sky: ["#666666", "#FFFFFF"],
+    skylight: [0.33 , 0.66],
     torus: ["#333333", "#555555"],
     bloom: [0.4, 0.3],
     lights: "https://wizgrav.github.io/clubber/tool/?tool=1&t0=0234&r0=1,32,32,128&s0=0.09,0.09,0.09,0.09&a0=1,1,1,1&t1=0234&r1=36,48,32,128&s1=0.09,0.09,0.09,-0.2&a1=0.5,0.1,0.5,1&t2=0234&r2=48,64,32,128&s2=0.09,0.09,0.08,0.08&a2=1,1,1,1&t3=0234&r3=64,96,48,128&s3=0.08,0.08,0.08,0.08&a3=1,1,0.5,0.2&red=smoothstep(iMusic%5B1%5D.z%20*%200.33%2C%20iMusic%5B1%5D.z%2C%20iMusic%5B1%5D.w)%20*%20smoothstep(0.%2C%200.66%2C%20iMusic%5B1%5D.w)&green=smoothstep(iMusic%5B2%5D.x%2C%202.%20-%20iMusic%5B2%5D.z%2C%20length(iMusic%5B2%5D.yw))%20&blue=smoothstep(iMusic%5B1%5D.y%20*%20iMusic%5B2%5D.y%2C%201.66%20-%20iMusic%5B0%5D.w%20*%20iMusic%5B1%5D.w%2C%20length(iMusic%5B0%5D.yw%20*%20iMusic%5B1%5D.yw))&alpha=smoothstep(0.33%2C%201.66%20-%20iMusic%5B3%5D.w%2C%20length(max(iMusic%5B2%5D.xz%2C%20iMusic%5B3%5D.xz)))&track=https%3A%2F%2Fsoundcloud.com%2Fdraufunddran%2Fdrauf-und-dran-2eur&shader=https%3A%2F%2Fwww.shadertoy.com%2Fview%2FMtGSWz",

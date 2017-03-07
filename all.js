@@ -96391,7 +96391,7 @@
 	  "    }",
 	  "    vxz = vxz * (center)/len;",
 	  "    vec3 ld = vec3(vxz.x, -2., vxz.y);",
-	  "    directLight.direction = normalize(vec3(0., -1., 0.));",
+	  "    directLight.direction = normalize(ld);",
 	  "",
 	  "    float lightDistance = length(ld);",
 	   "",
